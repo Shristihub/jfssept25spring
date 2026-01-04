@@ -12,13 +12,17 @@ public class EmpMain {
 		ApplicationContext context = new AnnotationConfigApplicationContext("com.spring.setter");
 		
 		// see the beans created by APplicationcontext
-	  Stream.of(context.getBeanDefinitionNames()).forEach(System.out::println);
+//	  Stream.of(context.getBeanDefinitionNames()).forEach(System.out::println);
 		
 		
 		// get the object from the IoC Container
 		Employee employee =  (Employee) context.getBean("employee");
-		System.out.println(employee);
-		
-		
+		// new bean with same values
+		Employee employee1 =  (Employee) context.getBean("employee",Employee.class);
+		System.out.println(employee.getEmployeeName());
+		System.out.println(employee1.getEmployeeName());
+		employee.setEmployeeName("Sri");
+		System.out.println(employee.getEmployeeName());
+		System.out.println(employee1.getEmployeeName());
 	}
 }
