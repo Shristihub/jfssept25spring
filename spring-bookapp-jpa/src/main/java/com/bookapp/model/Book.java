@@ -6,8 +6,12 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQuery;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,10 +19,17 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
+@NamedQuery(name="fetchByCategoryAuthor", 
+            query="from Book b where b.category=?1 and b.author=?2")
+@NamedQueries(value = {
+		@NamedQuery(name="findByAuth",query="from Book b where b.author=?1"),
+		@NamedQuery(name="findByCat",query="from Book b where b.category=?1")
+})
+
+@NamedNativeQuery(name="fetchAll", query="select * from book")
+
 //@Table(name = "BookDetails") //book_details to give a differnt table name
 public class Book {
 	@Column(length = 30)
@@ -33,60 +44,6 @@ public class Book {
 	@Column(length = 30)
 	private String category;
 	private LocalDate datePublished;
-	public Book() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Book(String title, Integer bookId, double price, String author, String category, LocalDate datePublished) {
-		super();
-		this.title = title;
-		this.bookId = bookId;
-		this.price = price;
-		this.author = author;
-		this.category = category;
-		this.datePublished = datePublished;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public Integer getBookId() {
-		return bookId;
-	}
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	public LocalDate getDatePublished() {
-		return datePublished;
-	}
-	public void setDatePublished(LocalDate datePublished) {
-		this.datePublished = datePublished;
-	}
-	@Override
-	public String toString() {
-		return "Book [title=" + title + ", bookId=" + bookId + ", price=" + price + ", author=" + author + ", category="
-				+ category + ", datePublished=" + datePublished + "]";
-	}
 	
 	
 

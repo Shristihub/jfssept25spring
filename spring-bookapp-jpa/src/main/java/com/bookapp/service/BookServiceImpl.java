@@ -54,9 +54,7 @@ public class BookServiceImpl implements IBookService {
 	@Override
 	public List<BookDto> getAll() {
 		List<Book> books= repository.findAll();
-		return books.stream()
-		     .map(book->mapper.map(book, BookDto.class))
-		     .toList();
+		return convertToDto(books);
 	}
 
 	@Override
@@ -69,10 +67,69 @@ public class BookServiceImpl implements IBookService {
 			return mapper.map(book,BookDto.class);
 		}
 		throw new BookNotFoundException("invalid id");
-		
-		
 	}
 
+	@Override
+	public List<BookDto> getByAuthor(String author) {
+		List<Book> books= repository.findByAuthor(author);
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by author not available");
+		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> getByLesserPrice( double price) {
+		List<Book> books= repository.queryByPriceLessThan(price);
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by lesser price not available");
+		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> getByAuthorPrice(String author, double price) throws BookNotFoundException {
+		List<Book> books= repository.findByAuthorPrice(author,price);
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by author and lesser price not available");
+		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> getByCategoryTitleContains(String category, String title) throws BookNotFoundException {
+		List<Book> books= repository.findByCategoryTitle(category, "%"+title+"%");
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by author and lesser price not available");
+		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> getByCategory(String category) {
+		List<Book> books= repository.readByCategory(category);
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by category not available");
+		return convertToDto(books);
+	}
+
+	private List<BookDto> convertToDto(List<Book> books){
+		//convert books to stream, call map method
+		return books.stream()
+				.map(book->mapper.map(book, BookDto.class)).toList();
+	}
+
+	@Override
+	public List<BookDto> getByCatAuth(String category, String author) throws BookNotFoundException {
+		List<Book> books= repository.readByCatAuth(category, author);
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by author not available");
+		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> findAboveAvgPrice() {
+		List<Book> books= repository.findAboveAvgPrice();
+		if(books.isEmpty())
+		   throw new BookNotFoundException("book by author not available");
+		return convertToDto(books);
+	}
 }
 
 
