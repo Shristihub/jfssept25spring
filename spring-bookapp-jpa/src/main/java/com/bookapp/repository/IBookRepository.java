@@ -33,7 +33,7 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
   	
   	
   	//NativeQuery
-  	@Query(value = "select * from book where cost>(select avg(cost) from book)",nativeQuery = true)
+  	@Query(value = "select b from Book b where b.price>(select avg(b.price) from Book b)")
   	List<Book> findAboveAvgPrice();
   	
   	

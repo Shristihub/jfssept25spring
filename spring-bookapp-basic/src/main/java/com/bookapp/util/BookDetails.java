@@ -16,7 +16,7 @@ public class BookDetails {
 	public List<Book> showBooks() {
 		return Arrays.asList(
 				new Book("Java",10,900,"Kathy","tech", LocalDate.of(1996, 10, 30)), 
-				new Book("Spring",10,900,"John","tech", LocalDate.of(1996, 10, 30))
+				new Book("Spring",11,900,"John","tech", LocalDate.of(1996, 10, 30))
 		);
 
 	}
