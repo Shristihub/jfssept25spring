@@ -1,0 +1,12 @@
+#datasource specific properties
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/jfsseptbatch
+    username: root
+    password: root		
+
+#jpa specific properties
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true

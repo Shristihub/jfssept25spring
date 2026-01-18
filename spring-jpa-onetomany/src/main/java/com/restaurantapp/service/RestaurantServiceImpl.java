@@ -72,8 +72,13 @@ public class RestaurantServiceImpl implements IRestaurantService {
 
 	@Override
 	public List<RestaurantDto> getByItemTypeCuisine(String itemType, String cuisine) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Restaurant> restaurants = restaurantRepository.findByItemTypeCuisine(itemType, cuisine);
+		//convert restaurants to stream
+		List<RestaurantDto> restaurantsDto = restaurants.stream()
+		       //use map method of streams api to call mapper class
+		       .map(restaurant->mapper.convertToRestDto(restaurant))
+		       .toList();
+		return restaurantsDto;
 	}
 
 	@Override

@@ -39,39 +39,42 @@ public class SpringJpaOnetomanyApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		//create MenuItemsDto - menuItem1, menuItem2, menuItem3
-		MenuItemDto item1 = new MenuItemDto("Masala Dosa",null,100,ItemType.BREAKFAST.name());
-		MenuItemDto item2 = new MenuItemDto("Chicken Fried Rice",null,150,ItemType.LUNCH.name());
+		MenuItemDto item1 = new MenuItemDto("Pasta",null,100,ItemType.BREAKFAST.name());
+		MenuItemDto item2 = new MenuItemDto("Spring rolls",null,150,ItemType.STARTER.name());
 		MenuItemDto item3 = new MenuItemDto("Chicken Soup",null,80,ItemType.SOUPS.name());
 		// convert to a Set
 		Set<MenuItemDto> menuItems = new HashSet<>(Arrays.asList(item1,item2,item3));
 		//create RestaurantDto object by add
 		RestaurantDto restaurantDto =  
-				new RestaurantDto("Anjappar", null, "Chennai", Cuisine.SI.getCuisineType(), Category.NONVEG,menuItems);
+				new RestaurantDto("Tuk Tuk", null, "Chennai", Cuisine.CHINESE.getCuisineType(), Category.NONVEG,menuItems);
 		//call the method of service
-		restaurantService.addRestaurant(restaurantDto);
+//		restaurantService.addRestaurant(restaurantDto);
 		
-		item1 = new MenuItemDto("veg Momos",null,200,ItemType.STARTER.name());
-		item2 = new MenuItemDto("Chicken Fried Rice",null,350,ItemType.LUNCH.name());
-		item3 = new MenuItemDto("chicken lollipop",null,480,ItemType.STARTER.name());
+		item1 = new MenuItemDto("Chicken Momos",null,200,ItemType.STARTER.name());
+		item2 = new MenuItemDto("Chicken Bamboo rice",null,350,ItemType.LUNCH.name());
+		item3 = new MenuItemDto("chicken Soup",null,480,ItemType.SOUPS.name());
 		
 		menuItems = new HashSet<MenuItemDto>(Arrays.asList(item1,item2,item3));
 		
 		restaurantDto =  
-		new RestaurantDto("Mainland China", null, "Bengaluru", Cuisine.CHINESE.name(), Category.NONVEG,menuItems);
+		new RestaurantDto("Beijing Bites", null, "Bengaluru", Cuisine.CHINESE.name(), Category.NONVEG,menuItems);
 		
-		restaurantService.addRestaurant(restaurantDto);
+//		restaurantService.addRestaurant(restaurantDto);
 
 		System.out.println();
 		restaurantService.getAll().forEach(System.out::println);
 		
 		System.out.println();
-		RestaurantDto restDto = restaurantService.getById(1);
-		System.out.println(restDto);
-		
-		restaurantService.getByCity("Bengaluru").forEach(System.out::println);
-		
-		
-		
+//		RestaurantDto restDto = restaurantService.getById(1);
+//		System.out.println(restDto);
+		System.out.println();
+//		restaurantService.getByCity("Bengaluru").forEach(System.out::println);
+		System.out.println("--------by chinese and starters.............");
+		restaurantService.getByItemTypeCuisine("STARTER", "CHINESE").forEach(System.out::println);
+		System.out.println();
+		System.out.println();
+		System.out.println("itemname............");
+		restaurantService.getByItemNameContains("Chicken").forEach(System.out::println);
 		
 		// get restaurant byId;
 		//create 2 new menuItems add to this restaurant by calling setMenuItems method

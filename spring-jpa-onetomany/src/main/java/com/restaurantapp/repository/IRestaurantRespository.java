@@ -17,7 +17,7 @@ public interface IRestaurantRespository extends JpaRepository<Restaurant, Intege
 	List<Restaurant> findByCategory(Category category); //veg
 	@Query(
 		"""
-			select r from Restaurant r join r.menuItems mi where mi.itemType=?1 
+			select r from Restaurant r join fetch r.menuItems mi where mi.itemType=?1 
 			 and r.cuisine=?2
 			""")	
 	List<Restaurant> findByItemTypeCuisine(String itemType,String cuisine);  //chinese starters
@@ -32,7 +32,9 @@ public interface IRestaurantRespository extends JpaRepository<Restaurant, Intege
 //	
 //	List<Restaurant> findByCategoryItemName(Category category,String itemName);//veg, paneer
 	
+	@Query("select r from Restaurant r join r.menuItems mi where mi.itemName like ?1")	
 	List<Restaurant> findByItemNameContains(String itemName);// paneer
+	
 	@Query(
 			"""
 				select r from Restaurant r join r.menuItems mi where mi.itemName=?1 
