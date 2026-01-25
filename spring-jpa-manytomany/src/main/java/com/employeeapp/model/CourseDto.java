@@ -4,12 +4,15 @@ import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @ToString(exclude = "employees")
 public class CourseDto {
 	private Integer courseId;

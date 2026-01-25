@@ -20,31 +20,40 @@ public class EmployeeMapper {
 	private ModelMapper mapper;
 
 	public EmployeeDto convertToEmployeeDto(Employee employee) {
-		//get the courses from employees and covert to dto
-		Set<CourseDto> courseDtos = employee.getCourses().stream()
-				.map(course->convertToCourseDto(course))
+		// get the employeedto from employee
+		EmployeeDto employeeDto = mapper.map(employee, EmployeeDto.class);
+
+		// get the courses from the employee
+		Set<Course> courses = employee.getCourses();
+		System.out.println(courses);
+		
+		// convert courses to courseDtos
+		// use map method of streams to convert course to courseDto
+		Set<CourseDto> courseDtos = courses.stream().map(course -> convertToCourseDto(course))
 				.collect(Collectors.toSet());
-		// get the employeeDto from employee
-		EmployeeDto employeeDto = mapper.map(employee,EmployeeDto.class);
-		// set the coursedtos to employeeDto
+
+		// attach the courseDtos to employeeDto
 		employeeDto.setCourses(courseDtos);
-		return employeeDto; 
+		return employeeDto;
 	}
 
 	public List<EmployeeDto> convertToEmployeeDto(List<Employee> employees) {
 
-		//convert employees to a stream, get one employee convert to dto
+		// convert employees to a stream, get one employee convert to dto
 		// convert course to dto and add coursedto to employeedto and return list
-//		return employeeDtos;
-		return null;
+		// convert employees to stream- get one emp object
+		List<EmployeeDto> employeeDtos = employees.stream()
+											.map(employee ->convertToEmployeeDto(employee))
+											.toList();
+		return employeeDtos;
 	}
-	
-	
+
 	public Employee convertToEmployeeEntity(EmployeeDto employeeDto) {
-		return mapper.map(employeeDto,Employee.class);
+		return mapper.map(employeeDto, Employee.class);
 	}
 
 	public CourseDto convertToCourseDto(Course course) {
+
 		return mapper.map(course, CourseDto.class);
 	}
 

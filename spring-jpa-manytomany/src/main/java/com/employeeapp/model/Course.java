@@ -9,18 +9,18 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @ToString(exclude = "employees")
 public class Course {
@@ -40,9 +40,6 @@ public class Course {
 	
 	@ManyToMany(mappedBy = "courses")
 	private Set<Employee> employees;
-	
-	
-	
 	
 	
 	

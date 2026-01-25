@@ -42,6 +42,7 @@ public class CourseServiceImpl implements ICourseService{
 		Optional<Course> optcourse = courseRepository.findById(courseId);
 		if(optcourse.isPresent()) {
 			Course course = optcourse.get();
+			course.setEmployees(null);
 			return mapper.convertToCourseDto(course);
 		}
 			

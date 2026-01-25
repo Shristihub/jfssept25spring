@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.employeeapp.config.EmployeeMapper;
 import com.employeeapp.model.CourseLevel;
@@ -12,12 +13,14 @@ import com.employeeapp.model.EmployeeDto;
 import com.employeeapp.model.Mode;
 import com.employeeapp.repository.IEmployeeRepository;
 
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements IEmployeeService{
-	
+@Transactional
+public class EmployeeServiceImpl implements IEmployeeService {
+
 	private final IEmployeeRepository employeeRepository;
 	private final EmployeeMapper mapper;
 
@@ -30,58 +33,60 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	@Override
 	public void updateEmployee(EmployeeDto employeeDto) {
 		Employee employee = mapper.convertToEmployeeEntity(employeeDto);
-		employeeRepository.save(employee);		
+		employeeRepository.save(employee);
 	}
 
 	@Override
 	public void deleteEmployee(int employeeId) {
 		employeeRepository.deleteById(employeeId);
-		
+
 	}
 
 	@Override
 	public EmployeeDto getById(int employeeId) {
 		Optional<Employee> optemployee = employeeRepository.findById(employeeId);
-		if(optemployee.isPresent()) {
+		if (optemployee.isPresent()) {
 			Employee employee = optemployee.get();
 			return mapper.convertToEmployeeDto(employee);
 		}
-			
 		return null;
 	}
 
 	@Override
 	public List<EmployeeDto> getAll() {
-		List<Employee> employees = employeeRepository.findAll();
-		//convert employees to stream-> modify one by one employee to dto
-		List<EmployeeDto> employeeDtos = employees.stream()
-									.map(employee->mapper.convertToEmployeeDto(employee))
-									.toList();
+		List<Employee> employees = 
+				employeeRepository.findAll();
+				
+		List<EmployeeDto> employeeDtos = mapper.convertToEmployeeDto(employees);
 		return employeeDtos;
 	}
 
 	@Override
 	public List<EmployeeDto> getByCity(String city) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = employeeRepository.findByCity(city);
+		List<EmployeeDto> employeeDtos = mapper.convertToEmployeeDto(employees);
+		return employeeDtos;
 	}
 
 	@Override
 	public List<EmployeeDto> getByCourseName(String courseName) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = employeeRepository.findByCourseName(courseName);
+		List<EmployeeDto> employeeDtos = mapper.convertToEmployeeDto(employees);
+		return employeeDtos;
 	}
 
 	@Override
 	public List<EmployeeDto> getByCourseNameAndLevel(String courseName, CourseLevel level) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = employeeRepository.findByCourseNameAndLevel(courseName,level);
+		List<EmployeeDto> employeeDtos = mapper.convertToEmployeeDto(employees);
+		return employeeDtos;
 	}
 
 	@Override
 	public List<EmployeeDto> getByCourseNameAndMode(String courseName, Mode mode) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employees = employeeRepository.findByCourseNameAndMode(courseName, mode);
+		List<EmployeeDto> employeeDtos = mapper.convertToEmployeeDto(employees);
+		return employeeDtos;
 	}
 
 }

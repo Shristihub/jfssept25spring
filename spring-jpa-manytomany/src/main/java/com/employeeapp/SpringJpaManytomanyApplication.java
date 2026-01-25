@@ -27,6 +27,7 @@ public class SpringJpaManytomanyApplication implements CommandLineRunner {
 
 	@Autowired
 	private ICourseService courseService;
+	@Autowired
 	private IEmployeeService employeeService;
 
 	@Override
@@ -34,28 +35,58 @@ public class SpringJpaManytomanyApplication implements CommandLineRunner {
 		// add course to database;
 		CourseDto courseDto1 = new CourseDto(null, "Java", Mode.ONLINE, Category.BE.getCategory(), 
 				CourseLevel.BEGINNER,"Priya", null);
-		courseService.addCourse(courseDto1);
+//		courseService.addCourse(courseDto1);
 		CourseDto courseDto2 = new CourseDto(null, "Gen AI", Mode.ONLINE, Category.ML.getCategory(), 
 				CourseLevel.BEGINNER,"Priya", null);
-		courseService.addCourse(courseDto2);
+//		courseService.addCourse(courseDto2);
 		CourseDto courseDto3 = new CourseDto(null, "React", Mode.OFFLINE, Category.FE.getCategory(), 
 				CourseLevel.INTERMEDIATE,"Jo", null);
-		courseService.addCourse(courseDto3);
+//		courseService.addCourse(courseDto3);
 		
 		// for working with employee
 		
 		// get 3 courseDtos by id
-		CourseDto courseDto11 = courseService.getById(10);
-		CourseDto courseDto22 = courseService.getById(11);
-		CourseDto courseDto33 = courseService.getById(12);
+		CourseDto courseDto11 = courseService.getById(13);
+		CourseDto courseDto22 = courseService.getById(12);
+		CourseDto courseDto33 = courseService.getById(11);
 //		create a list
 		List<CourseDto> coursesList = Arrays.asList(courseDto11,courseDto22,courseDto33);
-		System.out.println(coursesList);
+//		System.out.println(coursesList);
 		//add to a set
 		Set<CourseDto> courses = new HashSet<>(coursesList);
 		// create employeeDtos and add course to employee
-		EmployeeDto employee = new EmployeeDto(null, "Rakesh", "Tech", "Pune", courses);
-		employeeService.addEmployee(employee);
+		EmployeeDto employee = new EmployeeDto(null, "Jo", "Admin", "Bengaluru", courses);
+//		employeeService.addEmployee(employee);
+		
+//		System.out.println();
+		employeeService.getAll().forEach(System.out::println);
+//		
+		System.out.println();
+		employeeService.getByCity("Bengaluru").forEach(System.out::println);
+		
+		System.out.println();
+		System.out.println();
+		employeeService.getByCourseName("ML").forEach(System.out::println);
+		
+		System.out.println();
+		System.out.println();
+		employeeService.getByCourseNameAndLevel("Java",CourseLevel.BEGINNER).forEach(System.out::println);
+//		
+		System.out.println();
+		System.out.println();
+		employeeService.getByCourseNameAndMode("React",Mode.ONLINE).forEach(System.out::println);
+//		
+		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
