@@ -10,6 +10,7 @@ public class Player {
 	@Autowired
 	@Qualifier("outdoor")
 	ISports sports; // new Outdoor()
+	
 
 	@Autowired
 	ISports indoor; // = new Indoor() 
