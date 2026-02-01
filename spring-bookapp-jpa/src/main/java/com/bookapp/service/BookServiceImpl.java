@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookapp.exception.BookNotFoundException;
 import com.bookapp.model.Book;
@@ -12,7 +15,6 @@ import com.bookapp.model.BookDto;
 import com.bookapp.repository.IBookRepository;
 
 @Service
-//@RequiredArgsConstructor
 public class BookServiceImpl implements IBookService {
 
 	private ModelMapper mapper;
@@ -129,6 +131,20 @@ public class BookServiceImpl implements IBookService {
 		if(books.isEmpty())
 		   throw new BookNotFoundException("book by author not available");
 		return convertToDto(books);
+	}
+
+	@Override
+	public List<BookDto> getSortedBooks(String... property) {
+//		Sort sort = Sort.by("title");
+		Sort sort = Sort.by(Direction.DESC, property);
+		List<Book> books= repository.findAll(sort);
+		return convertToDto(books);
+	}
+
+	@Transactional
+	@Override
+	public void updateBook(int bookId, double price) {
+		repository.updateBook( bookId, price);
 	}
 }
 

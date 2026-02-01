@@ -31,6 +31,12 @@ public interface IBookService {
 	//native query
 	List<BookDto> findAboveAvgPrice();
 	
+	//sorting
+	List<BookDto> getSortedBooks(String... property);
+	
+	// update few properties
+	void updateBook(int bookId, double price);
+	
 	
 
 }

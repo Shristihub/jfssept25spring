@@ -46,8 +46,9 @@ public class SpringBookappJpaApplication implements CommandLineRunner{
 		
 		bookDto = new BookDto("Learn Java in 10 days",null, 560,"Michael","tech", LocalDate.of(2008, 12, 12));
 //		bookService.addBook(bookDto);
-		
-		bookService.getAll().forEach(System.out::println);
+		System.out.println();
+		System.out.println();
+		bookService.getSortedBooks("category","title").forEach(System.out::println);
 		
 		System.out.println();
 //		BookDto bookdt = bookService.getById(1);
@@ -82,13 +83,22 @@ public class SpringBookappJpaApplication implements CommandLineRunner{
 //		System.out.println("By category and title........");
 //		bookService.getByCategoryTitleContains("tech","Java").forEach(System.out::println);
 		
-		System.out.println();
-		System.out.println("By Author and category........");
-		bookService.getByCatAuth("tech","Kathy").forEach(System.out::println);
-		
-		System.out.println();
-		System.out.println("By above avg price........");
+//		System.out.println();
+//		System.out.println("By Author and category........");
+//		bookService.getByCatAuth("tech","Kathy").forEach(System.out::println);
+//		
+//		System.out.println();
+//		System.out.println("By above avg price........");
+		System.out.println("...........above avg");
 		bookService.findAboveAvgPrice().forEach(System.out::println);
+		
+		bookService.updateBook(54, 640);
+		
+		BookDto bookdt = new BookDto();
+		bookdt.setBookId(1);
+		bookdt.setPrice(3000);
+		// using jpql- remaining properties as null
+		bookService.updateBook(bookdt);
 		
 	}
 

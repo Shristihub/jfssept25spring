@@ -1,6 +1,7 @@
 package com.bookapp.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.bookapp.model.Book;
@@ -32,14 +33,20 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
   	List<Book> readByCatAuth(String category, String author);
   	
   	
-  	//NativeQuery
-  	@Query(value = "select b from Book b where b.price>(select avg(b.price) from Book b)")
+  	//CustomQuery
+//  	@Query(value = "select b from Book b where b.price>(select avg(b.price) from Book b)")
+  	//nativequery
+  	@Query(value="select * from book where cost>(select avg(b.cost) from Book b)",nativeQuery = true)
   	List<Book> findAboveAvgPrice();
   	
   	
    //NamedNativeQuery - multi row sub query
   	@Query(name = "fetchAll",nativeQuery = true)
   	List<Book> findAllBooks();
+
+  	@Modifying
+  	@Query(value = "update book set cost=?2 where book_Id=?1",nativeQuery = true)
+	void updateBook(int bookId, double price);
   	
   	
 }

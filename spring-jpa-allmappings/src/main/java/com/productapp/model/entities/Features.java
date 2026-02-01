@@ -21,7 +21,7 @@ import lombok.ToString;
 public class Features {
 	@Id
 	@GeneratedValue(generator = "features_gen",strategy = GenerationType.AUTO)
-	@SequenceGenerator(name = "features_gen",sequenceName = "features_seq",initialValue = 20,allocationSize = 1)
+	@SequenceGenerator(name = "features_gen",sequenceName = "features_seq",initialValue = 50,allocationSize = 1)
 	private Integer featuresId;
 	@Column(length = 30)
 	private String description;

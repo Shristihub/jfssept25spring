@@ -2,6 +2,8 @@ package com.productapp.model.dtos;
 
 import java.util.List;
 
+import com.productapp.model.entities.Category;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,10 @@ public class ProductDto {
 	private double ratings;
 	private FeaturesDto features;
 	private List<OffersDto> offers;
-	
+	private List<CategoryDto> categories;
+	private BrandDto brand;
+	private List<String> deliveryTypes;
+	private List<String> paymentModes;
 }
 
 
