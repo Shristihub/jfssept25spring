@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.productapp.exception.ProductNotFoundException;
 import com.productapp.model.dtos.ProductDto;
 import com.productapp.service.IProductService;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/product-api/v1")
 @RequiredArgsConstructor
+
 public class ProductController {
 
 	private final IProductService productService;
@@ -31,10 +34,11 @@ public class ProductController {
 	// http://localhost:8081/product-api/v1products
 	@PostMapping( "/products")
 	ResponseEntity<Void> addProduct(@RequestBody ProductDto productDto) {
-		productService.addProduct(productDto);
-		//wrap it in ResponseEntity<Void>
-//		this returns the status as created and no body
-		return ResponseEntity.status(HttpStatus.CREATED.value()).build();
+//		productService.addProduct(productDto);
+//		//wrap it in ResponseEntity<Void>
+////		this returns the status as created and no body
+//		return ResponseEntity.status(HttpStatus.CREATED.value()).build();
+		return null;
 	}
 
 	// http://localhost:8081/product-api/v1/products
@@ -75,6 +79,27 @@ public class ProductController {
 		headers.add("info", "returns one product by id");
 		ProductDto productDto =  productService.getById(productId);
 		return new ResponseEntity<>(productDto,headers, 200);
+	}
+//	http://localhost:8081/product-api/v1/products/category?categoryname=sports
+	@GetMapping("/products/category")
+	ResponseEntity<List<ProductDto>> getByCategory(@RequestParam() String categoryname) {
+		List<ProductDto> products = productService.getByCategory(categoryname);
+		return ResponseEntity.ok(products);
+	}
+	ResponseEntity<List<ProductDto>> getByBrandAndPayType(String brand,String payment) {
+		return null;
+	}
+	ResponseEntity<List<ProductDto>> getByColor(String color) {
+		return null;
+	}
+	ResponseEntity<List<ProductDto>> getByCategoryAndDelivery(String category,String delivery){
+		return null;
+	}
+	ResponseEntity<List<ProductDto>> getByNameContains(String name){
+		return null;
+	}
+	ResponseEntity<List<ProductDto>> getByNameOffers(String name,String offers){
+		return null;
 	}
 }
 

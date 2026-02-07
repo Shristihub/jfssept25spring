@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements IProductService {
 
 	private final IProductRepository productRepository;
@@ -43,7 +44,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Transactional
+	
 	public List<ProductDto> getAll() {
 		List<Product> products = productRepository.findAll();
 		System.out.println(products);
@@ -60,7 +61,46 @@ public class ProductServiceImpl implements IProductService {
 		if (productOpt.isPresent()) {
 			Product product = productOpt.get();
 			return productMapper.converttoDto(product);
-		}
+		}else
+		 throw new ProductNotFoundException("invalid id");
+	}
+
+	@Override
+	public List<ProductDto> getByCategory(String category) {
+		List<Product> products = productRepository.findByCategory(category);
+		System.out.println(products);
+		if(products.isEmpty())
+			throw new ProductNotFoundException("product with this category not found");
+		return products.stream().map(product -> productMapper.converttoDto(product)).toList();
+	}
+
+	@Override
+	public List<ProductDto> getByBrandAndPayType(String brand, String payment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDto> getByColor(String color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDto> getByCategoryAndDelivery(String category, String delivery) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDto> getByNameContains(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDto> getByNameOffers(String name, String offers) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

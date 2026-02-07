@@ -14,7 +14,11 @@ public interface IProductService {
 	ProductDto getById(int productId) throws ProductNotFoundException;
 	
 	
-	
-	
+	List<ProductDto> getByCategory(String category) throws ProductNotFoundException;
+	List<ProductDto> getByBrandAndPayType(String brand,String payment) throws ProductNotFoundException;
+	List<ProductDto> getByColor(String color) throws ProductNotFoundException;
+	List<ProductDto> getByCategoryAndDelivery(String category,String delivery)throws ProductNotFoundException;
+	List<ProductDto> getByNameContains(String name)throws ProductNotFoundException;
+	List<ProductDto> getByNameOffers(String name,String offers)throws ProductNotFoundException;
 
 }
