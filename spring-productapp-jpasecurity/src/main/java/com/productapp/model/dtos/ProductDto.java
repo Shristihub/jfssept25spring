@@ -2,8 +2,6 @@ package com.productapp.model.dtos;
 
 import java.util.List;
 
-import com.productapp.model.entities.Category;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
